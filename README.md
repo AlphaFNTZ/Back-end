@@ -4,6 +4,7 @@ Projeto de back-end para o processo seletivo da Emakers Jr.
 # Tarefa principal:
 Criar uma API REST utilizando o framework Spring Boot e implementar um CRUD para livro e pessoa.
 A aplicação deverá seguir o seguinte modelo de dados:
+
 ![Opera_Instantâneo_2024-04-19_195215_www canva com-removebg-preview](https://github.com/AlphaFNTZ/Back-end/assets/167240605/71391ea5-91fa-4a17-943b-ba31a25831be)
 
 # Requisitos do projeto:
