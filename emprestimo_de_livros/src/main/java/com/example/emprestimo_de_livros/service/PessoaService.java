@@ -1,12 +1,8 @@
 package com.example.emprestimo_de_livros.service;
 
-import com.example.emprestimo_de_livros.dtos.request.LivroRequestDto;
 import com.example.emprestimo_de_livros.dtos.request.PessoaRequestDto;
-import com.example.emprestimo_de_livros.dtos.response.LivroResponseDto;
 import com.example.emprestimo_de_livros.dtos.response.PessoaResponseDto;
-import com.example.emprestimo_de_livros.models.LivroModel;
 import com.example.emprestimo_de_livros.models.PessoaModel;
-import com.example.emprestimo_de_livros.repositories.LivroRepositorio;
 import com.example.emprestimo_de_livros.repositories.PessoaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,7 +30,7 @@ public class PessoaService {
     public PessoaResponseDto updatePessoa(Long id_pessoa, PessoaRequestDto pessoaRequestDto){
         PessoaModel pessoaModel = getEntityById(id_pessoa);
         pessoaModel.setNome_pessoa(pessoaRequestDto.nome_pessoa());
-        pessoaModel.setCEP(pessoaRequestDto.cep());
+        pessoaModel.setCep(pessoaRequestDto.cep());
         pessoaRepositorio.save(pessoaModel);
         return new PessoaResponseDto(pessoaModel);
     }

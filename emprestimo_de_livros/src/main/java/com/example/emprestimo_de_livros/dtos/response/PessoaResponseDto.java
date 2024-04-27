@@ -8,6 +8,6 @@ public record PessoaResponseDto(
         Character cep
 ) {
     public PessoaResponseDto(PessoaModel pessoaModel) {
-        this(pessoaModel.getId_pessoa(), pessoaModel.getNome_pessoa(), pessoaModel.getCEP());
+        this(pessoaModel.getId_pessoa(), pessoaModel.getNome_pessoa(), pessoaModel.getCep());
     }
 }

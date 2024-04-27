@@ -3,9 +3,9 @@ package com.example.emprestimo_de_livros.dtos.request;
 import jakarta.validation.constraints.NotBlank;
 
 public record PessoaRequestDto(
-        @NotBlank(message = "Name is required")
+        @NotBlank(message = "O nome da pessoa é necessario")
         String nome_pessoa,
-        @NotBlank(message = "Cep is required")
+        @NotBlank(message = "O CEP é necessario")
         Character cep
 ) {
 }

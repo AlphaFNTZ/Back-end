@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.util.Collection;
+import java.util.Collections;
 
 @Getter
 @Setter
@@ -26,11 +28,13 @@ public class LivroModel {
     @Column(name = "data_lancamento", nullable = false)
     private Date data_lancamento;
 
+    @ManyToMany(mappedBy = "livros")
+    private Collection<PessoaModel> pessoa;
+
     @Builder
     public LivroModel(LivroRequestDto livroRequestDto) {
         this.nome_livro = livroRequestDto.nome_livro();
         this.nome_autor = livroRequestDto.nome_autor();
         this.data_lancamento = livroRequestDto.data_lancamento();
     }
-
 }
