@@ -22,7 +22,7 @@ public class PessoaModel {
     @Column(name = "nome_pessoa", nullable = false, length = 45)
     private String nome_pessoa;
     @Column(name = "cep", nullable = false, length = 9)
-    private Character cep;
+    private String cep;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(

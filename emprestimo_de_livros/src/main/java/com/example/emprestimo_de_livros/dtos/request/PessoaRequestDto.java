@@ -6,6 +6,6 @@ public record PessoaRequestDto(
         @NotBlank(message = "O nome da pessoa é necessario")
         String nome_pessoa,
         @NotBlank(message = "O CEP é necessario")
-        Character cep
+        String cep
 ) {
 }
