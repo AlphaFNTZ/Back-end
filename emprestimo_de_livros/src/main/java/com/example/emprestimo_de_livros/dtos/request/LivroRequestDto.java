@@ -10,6 +10,8 @@ public record LivroRequestDto(
         @NotBlank(message = "O nome do autor é necessario")
         String nome_autor,
         @NotBlank(message = "A data de lançamento é necessario")
-        Date data_lancamento
+        Date data_lancamento,
+        @NotBlank(message = "É necessario uma quantidade de livros inicial")
+        int quantidade
 ) {
 }

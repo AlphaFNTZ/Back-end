@@ -26,9 +26,9 @@ public class PessoaModel {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
-            name = "tb_emprestimo",
-            joinColumns = @JoinColumn(name = "id_pessoa"),
-            inverseJoinColumns = @JoinColumn(name = "id_livro")
+            name="tb_emprestimo",
+            joinColumns = @JoinColumn(name="id_pessoa"),
+            inverseJoinColumns = @JoinColumn(name="id_Livro")
     )
     private Collection<LivroModel> livros;
 

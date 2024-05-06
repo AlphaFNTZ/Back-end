@@ -7,9 +7,10 @@ public record LivroResponseDto(
         Long id_livro,
         String nome_livro,
         String nome_autor,
-        Date data_lancamento
+        Date data_lancamento,
+        int quantidade
 ) {
     public LivroResponseDto(LivroModel livroModel){
-        this(livroModel.getId_livro(), livroModel.getNome_livro(), livroModel.getNome_autor(), livroModel.getData_lancamento());
+        this(livroModel.getId_livro(), livroModel.getNome_livro(), livroModel.getNome_autor(), livroModel.getData_lancamento(), livroModel.getQuantidade());
     }
 }

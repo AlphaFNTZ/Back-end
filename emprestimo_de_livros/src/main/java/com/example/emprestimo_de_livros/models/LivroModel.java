@@ -1,21 +1,19 @@
 package com.example.emprestimo_de_livros.models;
-
 import com.example.emprestimo_de_livros.dtos.request.LivroRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.sql.Date;
+import java.util.Date;
 import java.util.Collection;
-import java.util.Collections;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 @Table(name = "TB_LIVRO")
+
 
 public class LivroModel {
     @Id
@@ -27,14 +25,17 @@ public class LivroModel {
     private String nome_autor;
     @Column(name = "data_lancamento", nullable = false)
     private Date data_lancamento;
+    @Column(name = "quantidade", nullable = false)
+    private int quantidade;
 
     @ManyToMany(mappedBy = "livros")
-    private Collection<PessoaModel> pessoa;
+    private Collection<PessoaModel> pessoas;
 
     @Builder
     public LivroModel(LivroRequestDto livroRequestDto) {
         this.nome_livro = livroRequestDto.nome_livro();
         this.nome_autor = livroRequestDto.nome_autor();
         this.data_lancamento = livroRequestDto.data_lancamento();
+        this.quantidade = livroRequestDto.quantidade();
     }
 }

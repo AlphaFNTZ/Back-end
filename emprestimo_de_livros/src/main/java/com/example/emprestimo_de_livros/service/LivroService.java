@@ -3,7 +3,9 @@ package com.example.emprestimo_de_livros.service;
 import com.example.emprestimo_de_livros.dtos.request.LivroRequestDto;
 import com.example.emprestimo_de_livros.dtos.response.LivroResponseDto;
 import com.example.emprestimo_de_livros.models.LivroModel;
+import com.example.emprestimo_de_livros.models.PessoaModel;
 import com.example.emprestimo_de_livros.repositories.LivroRepositorio;
+import com.example.emprestimo_de_livros.repositories.PessoaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,9 @@ import java.util.stream.Collectors;
 public class LivroService {
     @Autowired
     private LivroRepositorio livroRepositorio;
+    @Autowired
+    private PessoaRepositorio pessoaRepositorio;
+
     public List<LivroResponseDto> getAllLivros(){
         List<LivroModel> livros = livroRepositorio.findAll();
         return livros.stream().map(LivroResponseDto::new).collect(Collectors.toList());
@@ -41,6 +46,6 @@ public class LivroService {
         return "Livro removido com sucesso";
     }
     private LivroModel getEntityById(Long id_livro){
-        return livroRepositorio.findById(id_livro).orElseThrow(()-> new RuntimeException("Livro nao encontrado"));
+        return livroRepositorio.findById(id_livro).orElseThrow(()-> new RuntimeException("Livro não encontrado"));
     }
 }
