@@ -7,7 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -15,7 +15,8 @@ import java.util.Collection;
 @NoArgsConstructor
 @Table(name = "TB_PESSOA")
 
-public class PessoaModel {
+public class PessoaModelo
+{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id_pessoa;
@@ -30,10 +31,11 @@ public class PessoaModel {
             joinColumns = @JoinColumn(name="id_pessoa"),
             inverseJoinColumns = @JoinColumn(name="id_Livro")
     )
-    private Collection<LivroModel> livros;
+    private Set<LivroModelo> livros;
 
     @Builder
-    public PessoaModel(PessoaRequestDto pessoaRequestDto) {
+    public PessoaModelo(PessoaRequestDto pessoaRequestDto)
+    {
         this.nome_pessoa = pessoaRequestDto.nome_pessoa();
         this.cep = pessoaRequestDto.cep();
     }

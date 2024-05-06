@@ -5,8 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.Date;
-import java.util.Collection;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,8 +15,8 @@ import java.util.Collection;
 @NoArgsConstructor
 @Table(name = "TB_LIVRO")
 
-
-public class LivroModel {
+public class LivroModelo
+{
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id_livro;
@@ -29,10 +30,11 @@ public class LivroModel {
     private int quantidade;
 
     @ManyToMany(mappedBy = "livros")
-    private Collection<PessoaModel> pessoas;
+    private Set<PessoaModelo> pessoas;
 
     @Builder
-    public LivroModel(LivroRequestDto livroRequestDto) {
+    public LivroModelo(LivroRequestDto livroRequestDto)
+    {
         this.nome_livro = livroRequestDto.nome_livro();
         this.nome_autor = livroRequestDto.nome_autor();
         this.data_lancamento = livroRequestDto.data_lancamento();

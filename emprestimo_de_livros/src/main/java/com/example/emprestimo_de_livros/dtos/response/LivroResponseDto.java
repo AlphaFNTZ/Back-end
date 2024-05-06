@@ -1,6 +1,6 @@
 package com.example.emprestimo_de_livros.dtos.response;
 
-import com.example.emprestimo_de_livros.models.LivroModel;
+import com.example.emprestimo_de_livros.models.LivroModelo;
 import java.util.Date;
 
 public record LivroResponseDto(
@@ -9,8 +9,10 @@ public record LivroResponseDto(
         String nome_autor,
         Date data_lancamento,
         int quantidade
-) {
-    public LivroResponseDto(LivroModel livroModel){
-        this(livroModel.getId_livro(), livroModel.getNome_livro(), livroModel.getNome_autor(), livroModel.getData_lancamento(), livroModel.getQuantidade());
+)
+{
+    public LivroResponseDto(LivroModelo livroModelo)
+    {
+        this(livroModelo.getId_livro(), livroModelo.getNome_livro(), livroModelo.getNome_autor(), livroModelo.getData_lancamento(), livroModelo.getQuantidade());
     }
 }
