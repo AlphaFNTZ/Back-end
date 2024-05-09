@@ -5,27 +5,20 @@ import com.example.emprestimo_de_livros.dtos.request.RegistroRequestDto;
 import com.example.emprestimo_de_livros.dtos.response.LoginResponseDto;
 import com.example.emprestimo_de_livros.dtos.response.PessoaResponseDto;
 import com.example.emprestimo_de_livros.exceptions.gerais.EntidadeNaoEncontrada;
-import com.example.emprestimo_de_livros.exceptions.livros.EmprestimoNaoExistente;
+import com.example.emprestimo_de_livros.exceptions.emprestimos.EmprestimoNaoExistente;
 import com.example.emprestimo_de_livros.entities.LivroModelo;
 import com.example.emprestimo_de_livros.entities.PessoaModelo;
 import com.example.emprestimo_de_livros.exceptions.senha.SenhaErrada;
 import com.example.emprestimo_de_livros.infra.segurança.TokenServico;
 import com.example.emprestimo_de_livros.repositories.LivroRepositorio;
 import com.example.emprestimo_de_livros.repositories.PessoaRepositorio;
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
-import org.hibernate.validator.internal.constraintvalidators.bv.notempty.NotEmptyValidatorForArray;
-import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -51,25 +44,32 @@ public class PessoaServico
         PessoaModelo pessoaModelo = getEntityById(id_pessoa);
         return new PessoaResponseDto(pessoaModelo);
     }
-    public PessoaResponseDto updatePessoa (Long id_pessoa, @Valid RegistroRequestDto pessoaRequestDto)
+    public PessoaResponseDto updatePessoa (Long id_pessoa, @Valid RegistroRequestDto registroRequestDto)
     {
         PessoaModelo pessoaModelo = getEntityById(id_pessoa);
-        pessoaModelo.setNome_pessoa(pessoaRequestDto.nome_pessoa());
-        pessoaModelo.setCep(pessoaRequestDto.cep());
+        pessoaModelo.setNome_pessoa(registroRequestDto.nome_pessoa());
+        pessoaModelo.setCep(registroRequestDto.cep());
+        pessoaModelo.setEmail(registroRequestDto.email());
+        pessoaModelo.setSenha(passwordEncoder.encode(registroRequestDto.senha()));
         pessoaRepositorio.save(pessoaModelo);
         return new PessoaResponseDto(pessoaModelo);
     }
+    @Transactional
     public String deletePessoa (Long id_pessoa)
     {
         PessoaModelo pessoaModelo = getEntityById(id_pessoa);
-        pessoaRepositorio.delete(pessoaModelo);
-        return "A pessoa com o id " +id_pessoa+ " foi removida com sucesso";
+        if (pessoaModelo.getLivros().isEmpty()) {
+            pessoaRepositorio.delete(pessoaModelo);
+            return "A pessoa com o id " + id_pessoa + " foi removida com sucesso";
+        } else throw new EmprestimoNaoExistente(id_pessoa, "pessoa");
     }
     private PessoaModelo getEntityById(Long id_pessoa)
     {
         return pessoaRepositorio.findById(id_pessoa).orElseThrow(()-> new EntidadeNaoEncontrada(id_pessoa));
     }
+
     // Emprestimo e devolucao
+
     @Transactional
     public String emprestimoLivro(Long id_pessoa, long id_livro)
     {
@@ -89,13 +89,17 @@ public class PessoaServico
     {
         LivroModelo livro = livroRepositorio.findById(id_livro).orElseThrow(() -> new EntidadeNaoEncontrada(id_livro, "livro"));
         PessoaModelo pessoa = pessoaRepositorio.findById(id_pessoa).orElseThrow(()-> new EntidadeNaoEncontrada(id_pessoa, "pessoa"));
-        pessoa.getLivros().remove(livro);
-        int quantidade = livro.getQuantidade();
-        livro.setQuantidade(quantidade+1);
-        pessoaRepositorio.save(pessoa);
-        return "A devolução do livro " +id_livro+ " foi efetuada com sucesso";
+        if (pessoa.getLivros().contains(livro) && livro.getPessoas().contains(pessoa)) {
+            pessoa.getLivros().remove(livro);
+            int quantidade = livro.getQuantidade();
+            livro.setQuantidade(quantidade + 1);
+            pessoaRepositorio.save(pessoa);
+            return "A devolução do livro " + id_livro + " foi efetuada com sucesso";
+        } else throw new EmprestimoNaoExistente(id_livro, id_pessoa);
     }
+
     // Registro e login
+
     public PessoaResponseDto resgistro (RegistroRequestDto registroRequestDto)
     {
         PessoaModelo pessoaModelo = new PessoaModelo();

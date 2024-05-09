@@ -6,14 +6,14 @@ public class EntidadeNaoEncontrada extends RuntimeException
 {
     public EntidadeNaoEncontrada(Long id)
     {
-        super("A entidade com o id " +id+ " não foi encontrada");
+        super("A entidade com o id '" +id+ "' não foi encontrada");
     }
-    public EntidadeNaoEncontrada(String email)
+    public EntidadeNaoEncontrada(String entidade)
     {
-        super("O email '" +email+ "' não está cadastrado");
+        super("A entidade com a seguinte informação '" + entidade + "' não está cadastrada");
     }
     public EntidadeNaoEncontrada(Long id, String entidade)
     {
-        super("O/A "+entidade+" com o id "+id+" não foi encontrada");
+        super("O/A " + entidade + " com o id " + id + " não foi encontrado(a)");
     }
 }

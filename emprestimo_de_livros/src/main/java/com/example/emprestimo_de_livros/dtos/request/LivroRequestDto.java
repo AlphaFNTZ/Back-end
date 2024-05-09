@@ -9,10 +9,10 @@ import java.util.Date;
 
 public record LivroRequestDto(
         @NotBlank(message = "O nome do livro é necessario")
-        @Size(min = 1, max = 45, message = "O nome não contém o tamanho adequado")
+        @Size(min = 0, max = 45, message = "O nome não contém o tamanho adequado")
         String nome_livro,
         @NotBlank(message = "O nome do autor é necessario")
-        @Size(min = 1, max = 45, message = "O nome não contém o tamanho adequado")
+        @Size(min = 0, max = 45, message = "O nome não contém o tamanho adequado")
         String nome_autor,
         @NotNull(message = "A data de lançamento é necessaria")
         Date data_lancamento,

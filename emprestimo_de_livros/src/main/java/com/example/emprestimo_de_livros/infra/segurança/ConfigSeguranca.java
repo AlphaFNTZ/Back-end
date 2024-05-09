@@ -1,7 +1,5 @@
 package com.example.emprestimo_de_livros.infra.segurança;
 
-
-import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +29,7 @@ public class ConfigSeguranca
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // todas api-rest nao guarda o estado de login dentro delas. obs: "STATELESS" (uso de token)
                 .authorizeHttpRequests(authorize -> authorize // autoriza algumas acoes
+                        .requestMatchers("/v3/api-docs/**","/swagger-ui/**","/swagger-ui.html").permitAll()
                         .requestMatchers(HttpMethod.POST, "/pessoa/login").permitAll()
                         .requestMatchers(HttpMethod.POST, "/pessoa/registro").permitAll()
                         .anyRequest().authenticated()

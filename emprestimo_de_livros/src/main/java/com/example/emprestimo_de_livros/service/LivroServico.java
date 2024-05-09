@@ -4,8 +4,9 @@ import com.example.emprestimo_de_livros.dtos.request.LivroRequestDto;
 import com.example.emprestimo_de_livros.dtos.response.LivroResponseDto;
 import com.example.emprestimo_de_livros.exceptions.gerais.EntidadeNaoEncontrada;
 import com.example.emprestimo_de_livros.entities.LivroModelo;
+import com.example.emprestimo_de_livros.exceptions.emprestimos.EmprestimoNaoExistente;
 import com.example.emprestimo_de_livros.repositories.LivroRepositorio;
-import com.example.emprestimo_de_livros.repositories.PessoaRepositorio;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -16,8 +17,6 @@ public class LivroServico
 {
     @Autowired
     private LivroRepositorio livroRepositorio;
-    @Autowired
-    private PessoaRepositorio pessoaRepositorio;
 
     public List<LivroResponseDto> getAllLivros()
     {
@@ -34,6 +33,7 @@ public class LivroServico
         LivroModelo livroModelo = new LivroModelo(livroResponseDto);
         livroRepositorio.save(livroModelo);
         return new LivroResponseDto(livroModelo);
+        //throw new LivroExistencia(livroResponseDto.nome_livro(), livroResponseDto.nome_autor());
     }
     public LivroResponseDto updateLivro(Long id_livro, LivroRequestDto livroRequestDto)
     {
@@ -45,11 +45,16 @@ public class LivroServico
         livroRepositorio.save(livroModelo);
         return new LivroResponseDto(livroModelo);
     }
+    @Transactional
     public String deleteLivro(Long id_livro)
     {
         LivroModelo livroModelo = getEntityById(id_livro);
-        livroRepositorio.delete(livroModelo);
-        return "O livro " +id_livro+ " foi removido com sucesso";
+        if(livroModelo.getPessoas().isEmpty()) {
+            livroRepositorio.delete(livroModelo);
+            return "O livro " + id_livro + " foi removido com sucesso";
+        }else{
+            throw new EmprestimoNaoExistente(id_livro, "livro");
+        }
     }
     private LivroModelo getEntityById(Long id_livro)
     {

@@ -1,7 +1,6 @@
 package com.example.emprestimo_de_livros.exceptions.senha;
 
 import com.example.emprestimo_de_livros.exceptions.MensagemDeErro;
-import com.example.emprestimo_de_livros.exceptions.livros.EmprestimoNaoExistente;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
