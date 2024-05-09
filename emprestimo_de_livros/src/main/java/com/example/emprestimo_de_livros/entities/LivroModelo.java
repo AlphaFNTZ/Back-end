@@ -1,4 +1,5 @@
-package com.example.emprestimo_de_livros.models;
+package com.example.emprestimo_de_livros.entities;
+
 import com.example.emprestimo_de_livros.dtos.request.LivroRequestDto;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 @Getter
 @Setter
@@ -30,7 +31,8 @@ public class LivroModelo
     private int quantidade;
 
     @ManyToMany(mappedBy = "livros")
-    private Set<PessoaModelo> pessoas;
+    private List<PessoaModelo> pessoas;
+
 
     @Builder
     public LivroModelo(LivroRequestDto livroRequestDto)

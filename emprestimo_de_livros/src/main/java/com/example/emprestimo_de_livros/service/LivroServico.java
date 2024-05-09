@@ -2,8 +2,8 @@ package com.example.emprestimo_de_livros.service;
 
 import com.example.emprestimo_de_livros.dtos.request.LivroRequestDto;
 import com.example.emprestimo_de_livros.dtos.response.LivroResponseDto;
-import com.example.emprestimo_de_livros.excecoes.gerais.EntidadeNaoEncontrada;
-import com.example.emprestimo_de_livros.models.LivroModelo;
+import com.example.emprestimo_de_livros.exceptions.gerais.EntidadeNaoEncontrada;
+import com.example.emprestimo_de_livros.entities.LivroModelo;
 import com.example.emprestimo_de_livros.repositories.LivroRepositorio;
 import com.example.emprestimo_de_livros.repositories.PessoaRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +16,8 @@ public class LivroServico
 {
     @Autowired
     private LivroRepositorio livroRepositorio;
+    @Autowired
+    private PessoaRepositorio pessoaRepositorio;
 
     public List<LivroResponseDto> getAllLivros()
     {

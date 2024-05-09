@@ -1,6 +1,6 @@
 package com.example.emprestimo_de_livros.dtos.response;
 
-import com.example.emprestimo_de_livros.models.PessoaModelo;
+import com.example.emprestimo_de_livros.entities.PessoaModelo;
 
 public record PessoaResponseDto(
         Long id_pessoa,

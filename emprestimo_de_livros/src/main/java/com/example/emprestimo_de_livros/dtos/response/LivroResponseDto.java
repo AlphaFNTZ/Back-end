@@ -1,6 +1,6 @@
 package com.example.emprestimo_de_livros.dtos.response;
 
-import com.example.emprestimo_de_livros.models.LivroModelo;
+import com.example.emprestimo_de_livros.entities.LivroModelo;
 import java.util.Date;
 
 public record LivroResponseDto(

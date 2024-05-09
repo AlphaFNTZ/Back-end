@@ -1,8 +1,9 @@
-package com.example.emprestimo_de_livros.excecoes.gerais;
+package com.example.emprestimo_de_livros.exceptions.gerais;
 
-import com.example.emprestimo_de_livros.excecoes.MensagemDeErro;
+import com.example.emprestimo_de_livros.exceptions.MensagemDeErro;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,5 +26,11 @@ public class ControleExcecaoGeral
                 .stream().map(fieldError -> new MensagemDeErro(HttpStatus.BAD_REQUEST, fieldError.getDefaultMessage()))
                 .collect(Collectors.toList());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erros);
+    }
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    private ResponseEntity<MensagemDeErro> jsonVazio(HttpMessageNotReadableException exception)
+    {
+        MensagemDeErro mensagemDeErro = new MensagemDeErro(HttpStatus.BAD_REQUEST, "O corpo da requisição não pode estar vazio");
+        return ResponseEntity.status(mensagemDeErro.status()).body(mensagemDeErro);
     }
 }

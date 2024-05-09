@@ -1,4 +1,4 @@
-package com.example.emprestimo_de_livros.excecoes;
+package com.example.emprestimo_de_livros.exceptions;
 
 import org.springframework.http.HttpStatus;
 
