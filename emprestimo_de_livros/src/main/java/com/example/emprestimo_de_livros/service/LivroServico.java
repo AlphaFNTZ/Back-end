@@ -33,7 +33,6 @@ public class LivroServico
         LivroModelo livroModelo = new LivroModelo(livroResponseDto);
         livroRepositorio.save(livroModelo);
         return new LivroResponseDto(livroModelo);
-        //throw new LivroExistencia(livroResponseDto.nome_livro(), livroResponseDto.nome_autor());
     }
     public LivroResponseDto updateLivro(Long id_livro, LivroRequestDto livroRequestDto)
     {

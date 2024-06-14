@@ -19,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -102,13 +103,18 @@ public class PessoaServico
 
     public PessoaResponseDto resgistro (RegistroRequestDto registroRequestDto)
     {
-        PessoaModelo pessoaModelo = new PessoaModelo();
-        pessoaModelo.setEmail(registroRequestDto.email());
-        pessoaModelo.setSenha(passwordEncoder.encode(registroRequestDto.senha()));
-        pessoaModelo.setCep(registroRequestDto.cep());
-        pessoaModelo.setNome_pessoa(registroRequestDto.nome_pessoa());
-        this.pessoaRepositorio.save(pessoaModelo);
-        return new PessoaResponseDto(pessoaModelo);
+        Optional <PessoaModelo> pessoaExiste = pessoaRepositorio.findByEmail(registroRequestDto.email());
+        if (pessoaExiste.isPresent()){
+            throw new EmprestimoNaoExistente(registroRequestDto.email());
+        } else {
+            PessoaModelo pessoaModelo = new PessoaModelo();
+            pessoaModelo.setEmail(registroRequestDto.email());
+            pessoaModelo.setSenha(passwordEncoder.encode(registroRequestDto.senha()));
+            pessoaModelo.setCep(registroRequestDto.cep());
+            pessoaModelo.setNome_pessoa(registroRequestDto.nome_pessoa());
+            this.pessoaRepositorio.save(pessoaModelo);
+            return new PessoaResponseDto(pessoaModelo);
+        }
     }
     public LoginResponseDto login (LoginRequestDto loginRequestDto)
     {

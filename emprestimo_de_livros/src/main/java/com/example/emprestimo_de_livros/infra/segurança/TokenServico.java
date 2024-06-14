@@ -50,6 +50,6 @@ public class TokenServico
     }
     private Instant tempoExpiracao()
     {
-        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00")); // calculo do tempo de duração do token
+        return LocalDateTime.now().plusHours(2).toInstant(ZoneOffset.of("-03:00")); // calculo do tempo de duração do "token"
     }
 }

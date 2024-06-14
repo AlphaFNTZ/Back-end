@@ -6,6 +6,9 @@ public class EmprestimoNaoExistente extends RuntimeException
     {
         super("O livro " + id + " já está emprestado para esta pessoa.");
     }
+    public EmprestimoNaoExistente(String email){
+        super("0 email " +email+ " já está cadastrado");
+    }
     public EmprestimoNaoExistente(Long id, int quantidade)
     {
         super("O livro " + id + " não está disponivel no momento");

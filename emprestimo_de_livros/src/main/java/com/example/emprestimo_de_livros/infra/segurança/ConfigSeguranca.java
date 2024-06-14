@@ -16,12 +16,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+
 public class ConfigSeguranca
 {
     @Autowired
     private DetalhesUsuario detalhesUsuario;
     @Autowired
     FiltroSeguranca filtroSeguranca;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception
     {
@@ -37,11 +39,13 @@ public class ConfigSeguranca
                 .addFilterBefore(filtroSeguranca, UsernamePasswordAuthenticationFilter.class); // verifica se ele foi verificado antes de autorizar
         return http.build();
     }
+
     @Bean
     public PasswordEncoder passwordEncoder() // enconder da senha para não guardar
     {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

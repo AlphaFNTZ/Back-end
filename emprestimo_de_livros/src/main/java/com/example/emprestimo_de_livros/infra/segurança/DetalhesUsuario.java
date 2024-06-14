@@ -2,7 +2,6 @@ package com.example.emprestimo_de_livros.infra.segurança;
 
 import com.example.emprestimo_de_livros.entities.PessoaModelo;
 import com.example.emprestimo_de_livros.repositories.PessoaRepositorio;
-import jakarta.persistence.Id;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
